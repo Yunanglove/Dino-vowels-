@@ -1,27 +1,407 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kawaii Vowel Dino Club</title><link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vowel Dino World 🦕</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;font-family:'Trebuchet MS',sans-serif;
+ background:linear-gradient(135deg,#ffe4f1,#e8e1ff,#dcf8ff);
+ color:#665477;min-height:100vh;
+}
+header{text-align:center;padding:22px 12px}
+header h1{font-size:34px;margin:5px;color:#a45cba}
+header p{margin:5px}
+nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+button,select{
+ border:0;border-radius:18px;padding:12px 19px;
+ font-size:15px;font-weight:bold;cursor:pointer;
+ transition:.15s;background:#fff;color:#795c96;
+}
+button:hover{transform:scale(1.04)}
+button:active{transform:scale(.97)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.navbtn{background:#dcbaf5}
+.navbtn.active{background:#a76bce;color:white}
+.card{
+ background:#ffffffdf;border:3px solid #fff;
+ border-radius:25px;padding:22px;margin:18px auto;
+ max-width:760px;box-shadow:0 7px 20px #b79bd533;
+ text-align:center;
+}
+.page{display:none;padding:5px 14px 35px}
+.page.active{display:block}
+h2{color:#a45cba}
+.bigdino{font-size:75px}
+.small{font-size:13px;color:#927da4}
+.primary{background:#b984e5;color:white}
+.pink{background:#ffb9d7;color:#794a72}
+.blue{background:#a8dff5;color:#426c80}
+.green{background:#b7eacb;color:#47765b}
+.yellow{background:#ffe49b;color:#82672f}
+#progress{height:13px;background:#eee0f5;border-radius:20px;overflow:hidden;margin:15px 0}
+#bar{height:100%;width:0;background:#b984e5;transition:.3s}
+.options{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:18px}
+.options button{min-width:100px}
+.stat{display:inline-block;background:#fff0f8;border-radius:16px;padding:12px;margin:5px}
+.dinogrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:12px}
+.dinocard{background:#fff0f8;border-radius:20px;padding:15px}
+.dinocard .emoji{font-size:45px}
+.dinocard.locked{opacity:.4;filter:grayscale(1)}
+.historyitem{background:#fff0f8;border-radius:15px;padding:12px;margin:9px;text-align:left}
+input[type=text]{padding:12px;border:2px solid #e5c9f5;border-radius:15px;width:80%;max-width:300px}
+.notice{background:#fff5d9;padding:12px;border-radius:15px;margin:12px auto}
+</style>
 </head>
 <body>
-<header class="topbar"><a class="brand" href="index.html">🦕 Kawaii Vowel Dino Club</a><nav><a class="active" href="index.html">🌸 Play</a><a href="collection.html">🎀 Dino Garden</a></nav></header>
-<main class="shell">
-<section class="hero"><div><span class="bubble">♡ Welcome, little word explorer! ♡</span><h1>Let's practise our vowels! 🌈</h1><p>Choose your age, say the words, earn stars and collect adorable dinosaur friends.</p></div><div class="hero-art">🦕🌷✨</div></section>
-<section class="card"><div class="section-title"><span>🎀</span><div><h2>Choose your age</h2><p>Your word adventure changes to suit your age group.</p></div></div>
-<div class="age-options">
-<button class="age-option selected" data-age="4-5"><span>🐣</span><b>4–5 years</b><small>First vowel sounds</small></button>
-<button class="age-option" data-age="6-7"><span>🐰</span><b>6–7 years</b><small>Short & long vowels</small></button>
-<button class="age-option" data-age="8-9"><span>🐼</span><b>8–9 years</b><small>Vowel teams</small></button>
-<button class="age-option" data-age="10-12"><span>🦊</span><b>10–12 years</b><small>Tricky word patterns</small></button>
-</div><p id="ageNote" class="age-note">Ages 4–5: familiar, simple words and listening practice.</p></section>
-<section class="stats"><div class="stat"><span>⭐ My stars</span><strong id="stars">0</strong></div><div class="stat"><span>🦖 Dino friends</span><strong id="dinoCount">0</strong></div><div class="stat"><span>📅 Today's game</span><strong id="todayStatus">Not played</strong></div></section>
-<section class="card game-card"><div class="game-heading"><div><span class="bubble mini">DAILY DINO CHALLENGE</span><h2 id="gameTitle">Ready, dino pal?</h2></div><span class="counter" id="progressLabel">10 questions</span></div>
-<div id="startPanel" class="center-panel"><div class="big-art">🎤🌸</div><p>Find a quiet spot. Allow microphone access, then say each word clearly.</p><button id="startBtn" class="primary">Start my 10 questions ✨</button><p class="tiny">A grown-up can help with microphone permission.</p></div>
-<div id="questionPanel" hidden><div class="progress-track"><div id="progressBar"></div></div><p id="questionNumber" class="muted">Question 1 of 10</p><div class="question-box"><div class="word-deco">✿　♡　✿</div><p class="muted">Say this word:</p><div id="word" class="word">cat</div><div id="vowelHint" class="vowel-hint">Short a sound</div></div>
-<div class="controls"><button id="listenBtn" class="primary">🎙️ Listen to me</button><button id="hearBtn" class="secondary">🔊 Hear the word</button></div><p id="speechStatus" class="status" aria-live="polite">Tap “Listen to me” and say the word.</p><p id="heardText" class="muted heard"></p><button id="nextBtn" class="primary next" disabled>Next question ➜</button></div>
-<div id="resultPanel" hidden class="center-panel"><div id="resultEmoji" class="big-art">🎉</div><h2 id="resultTitle">You did it!</h2><p id="resultSummary"></p><div id="earnedStars" class="earned-stars"></div><p id="dinoReward" class="reward-text"></p><a class="button-link" href="collection.html">Visit my Dino Garden 🌷</a></div>
+
+<header>
+ <h1>🌸 Vowel Dino World 🦕</h1>
+ <p>Your magical pronunciation adventure!</p>
+ <nav>
+  <button class="navbtn active" onclick="showPage('home',this)">🏡 Home</button>
+  <button class="navbtn" onclick="showPage('collection',this)">🦖 Dino Collection</button>
+ </nav>
+</header>
+
+<!-- PAGE ONE -->
+<section id="home" class="page active">
+ <div class="card">
+  <div class="bigdino">🦕</div>
+  <h2>Welcome, Little Dino Explorer!</h2>
+  <p>Let's practise our vowels and earn some stars!</p>
+  <p>Choose your age to get suitable questions.</p>
+  <select id="age">
+   <option value="young">3–5 years old 🌼</option>
+   <option value="middle" selected>6–8 years old 🌈</option>
+   <option value="older">9–12 years old ⭐</option>
+   <option value="teen">13–17 years old 🚀</option>
+  </select>
+  <br><br>
+  <button class="primary" onclick="startGame()">Start Daily Exercise! 💖</button>
+  <div class="notice small">🎤 Please allow microphone access when your browser asks.</div>
+ </div>
+
+ <div class="card">
+  <h2>🌟 Your Adventure Stats</h2>
+  <div class="stat">⭐ Stars: <b id="stars">0</b></div>
+  <div class="stat">🦖 Dinosaurs: <b id="dinoCount">0</b></div>
+  <div class="stat">✨ Magical dinos: <b id="magicCount">0</b>/10</div>
+  <p class="small">Collect 50 stars to earn a bonus dinosaur!</p>
+  <p id="bonusStatus">Next bonus: 50 stars</p>
+ </div>
+
+ <div class="card" id="game" style="display:none">
+  <h2 id="questionTitle">Question 1 of 10</h2>
+  <div id="progress"><div id="bar"></div></div>
+  <div class="bigdino" id="questionEmoji">🦕</div>
+  <h2 id="questionWord">Apple</h2>
+  <p id="questionHint">Say this word aloud!</p>
+  <p class="small" id="targetVowel"></p>
+  <button class="primary" id="listenBtn" onclick="listen()">🎤 Listen to me!</button>
+  <p id="listenStatus">Press the microphone and say the word.</p>
+  <p class="small">Your browser may ask for microphone permission.</p>
+  <div id="fallback" style="display:none">
+   <p>Microphone recognition is unavailable. Type the word you said:</p>
+   <input type="text" id="typedWord" placeholder="Type the word here">
+   <button class="blue" onclick="checkTyped()">Check answer</button>
+  </div>
+  <button class="green" id="nextBtn" style="display:none" onclick="nextQuestion()">Next question ➜</button>
+  <p class="small" id="questionFeedback"></p>
+ </div>
+
+ <div class="card" id="result" style="display:none">
+  <div class="bigdino" id="resultEmoji">🏆</div>
+  <h2>Exercise Complete!</h2>
+  <h2 id="resultScore">0 / 10</h2>
+  <p id="resultMessage"></p>
+  <h2 id="earnedStars">⭐</h2>
+  <h2 id="earnedDino"></h2>
+  <button class="pink" onclick="showPage('collection')">See my dinosaurs 🦖</button>
+  <button class="primary" onclick="startGame()">Play again 🌸</button>
+ </div>
 </section>
-<p class="footer-note">♡ Every try helps you learn. You're doing dino-mite! ♡</p>
-</main><script src="app.js"></script>
-</body></html>
+
+<!-- PAGE TWO -->
+<section id="collection" class="page">
+ <div class="card">
+  <h2>🌈 My Dino Collection</h2>
+  <p>Collect all 10 magical dinosaurs!</p>
+  <div class="stat">⭐ <b id="collectionStars">0</b> stars</div>
+  <div class="stat">🦕 <b id="collectionCount">0</b> dinosaurs</div>
+  <h3>✨ Magical Dinosaurs</h3>
+  <div class="dinogrid" id="magicalGrid"></div>
+  <h3>🌸 Baby Dinosaurs</h3>
+  <div class="dinogrid" id="babyGrid"></div>
+  <h3>😅 Grumpy Dinosaurs</h3>
+  <div class="dinogrid" id="grumpyGrid"></div>
+ </div>
+
+ <div class="card">
+  <h2>📖 Exercise History</h2>
+  <div id="history"><p>No exercises yet. Let's play!</p></div>
+  <button class="pink" onclick="showPage('home')">Back to Home 🏡</button>
+ </div>
+</section>
+
+<script>
+const questions={
+ young:[
+  ["Apple","A","🍎"],["Egg","E","🥚"],["Igloo","I","🏠"],
+  ["Octopus","O","🐙"],["Umbrella","U","☂️"],
+  ["Ant","A","🐜"],["Elephant","E","🐘"],
+  ["Insect","I","🐞"],["Ostrich","O","🐦"],["Unicorn","U","🦄"]
+ ],
+ middle:[
+  ["Apple","A","🍎"],["Elephant","E","🐘"],["Insect","I","🐞"],
+  ["Octopus","O","🐙"],["Umbrella","U","☂️"],
+  ["Alligator","A","🐊"],["Engine","E","🚂"],
+  ["Igloo","I","🏠"],["Orange","O","🍊"],["Unicorn","U","🦄"]
+ ],
+ older:[
+  ["Astronaut","A","👨‍🚀"],["Envelope","E","✉️"],["Island","I","🏝️"],
+  ["Oxygen","O","🫧"],["Universe","U","🌌"],
+  ["Animal","A","🐾"],["Energy","E","⚡"],
+  ["Imagine","I","💭"],["Ocean","O","🌊"],["Unique","U","💎"]
+ ],
+ teen:[
+  ["Adventure","A","🗺️"],["Education","E","📚"],["Incredible","I","✨"],
+  ["Opportunity","O","🌟"],["Universe","U","🌌"],
+  ["Amazing","A","🌈"],["Experiment","E","🧪"],
+  ["Independent","I","🦋"],["Observation","O","🔭"],["Understanding","U","💡"]
+ ]
+};
+
+const magical=[
+ ["🌈","Rainbow Rex"],["🦄","Unicorn Dino"],["🌙","Moonlight Dino"],
+ ["🧚","Fairy Dino"],["💎","Crystal Dino"],["🌸","Blossom Dino"],
+ ["⭐","Starlight Dino"],["❄️","Ice Princess Dino"],
+ ["🔥","Flame Dino"],["🌊","Ocean Magic Dino"]
+];
+const babies=[
+ ["🦕","Baby Green Dino"],["🦖","Baby T-Rex"],
+ ["🐣","Tiny Dino"],["🌷","Flower Dino"],["🍓","Berry Dino"]
+];
+const grumpies=[
+ ["😤","Grumpy Dino"],["🥴","Sleepy Dino"],["🤪","Silly Dino"]
+];
+
+let data=JSON.parse(localStorage.getItem("vowelDinoSave")||"null")||{
+ stars:0,magical:[],babies:[],grumpies:[],history:[],bonusMilestones:0
+};
+let quiz=[],index=0,correct=0,earned=0,locked=false,recognition=null;
+
+function save(){
+ localStorage.setItem("vowelDinoSave",JSON.stringify(data));
+ updateStats();
+}
+function showPage(id,button){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".navbtn").forEach(b=>b.classList.remove("active"));
+ if(button)button.classList.add("active");
+ if(id==="collection")renderCollection();
+}
+function updateStats(){
+ document.getElementById("stars").textContent=data.stars;
+ document.getElementById("dinoCount").textContent=
+ data.magical.length+data.babies.length+data.grumpies.length;
+ document.getElementById("magicCount").textContent=data.magical.length;
+ document.getElementById("collectionStars").textContent=data.stars;
+ document.getElementById("collectionCount").textContent=
+ data.magical.length+data.babies.length+data.grumpies.length;
+ document.getElementById("bonusStatus").textContent=
+ "Next bonus: "+(Math.floor(data.stars/50)+1)*50+" stars";
+}
+function startGame(){
+ const level=document.getElementById("age").value;
+ quiz=[...questions[level]].sort(()=>Math.random()-.5);
+ index=0;correct=0;earned=0;
+ document.getElementById("result").style.display="none";
+ document.getElementById("game").style.display="block";
+ showPage("home");
+ displayQuestion();
+}
+function displayQuestion(){
+ locked=false;
+ const q=quiz[index];
+ document.getElementById("questionTitle").textContent=
+ "Question "+(index+1)+" of 10";
+ document.getElementById("bar").style.width=(index*10)+"%";
+ document.getElementById("questionWord").textContent=q[0];
+ document.getElementById("questionEmoji").textContent=q[2];
+ document.getElementById("targetVowel").textContent=
+ "Listen for the vowel: "+q[1];
+ document.getElementById("listenStatus").textContent=
+ "Press the microphone and say the word.";
+ document.getElementById("questionFeedback").textContent="";
+ document.getElementById("nextBtn").style.display="none";
+ document.getElementById("listenBtn").style.display="inline-block";
+ document.getElementById("fallback").style.display="none";
+ document.getElementById("typedWord").value="";
+}
+function listen(){
+ const SpeechRecognition=window.SpeechRecognition||
+ window.webkitSpeechRecognition;
+ if(!SpeechRecognition){
+  document.getElementById("fallback").style.display="block";
+  document.getElementById("listenStatus").textContent=
+  "Voice recognition is not supported in this browser.";
+  return;
+ }
+ if(recognition)recognition.abort();
+ recognition=new SpeechRecognition();
+ recognition.lang="en-SG";
+ recognition.continuous=false;
+ recognition.interimResults=false;
+ recognition.maxAlternatives=3;
+ document.getElementById("listenStatus").textContent="🎤 Listening...";
+ document.getElementById("listenBtn").disabled=true;
+ recognition.onresult=e=>{
+  let transcript=e.results[0][0].transcript;
+  checkAnswer(transcript);
+ };
+ recognition.onerror=e=>{
+  document.getElementById("listenStatus").textContent=
+  "Couldn't hear that clearly. Please try again!";
+  document.getElementById("listenBtn").disabled=false;
+ };
+ recognition.onend=()=>{
+  document.getElementById("listenBtn").disabled=false;
+ };
+ recognition.start();
+}
+function checkTyped(){
+ checkAnswer(document.getElementById("typedWord").value);
+}
+function checkAnswer(spoken){
+ if(locked)return;
+ const expected=quiz[index][0].toLowerCase();
+ const heard=spoken.toLowerCase().replace(/[^a-z]/g," ").trim();
+ const words=heard.split(/\s+/);
+ const isCorrect=words.some(w=>w===expected);
+ locked=true;
+ document.getElementById("listenBtn").style.display="none";
+ document.getElementById("fallback").style.display="none";
+ document.getElementById("listenStatus").textContent=
+ "I heard: "+spoken;
+ if(isCorrect){
+  correct++;
+  document.getElementById("questionFeedback").textContent=
+  "🎉 Wonderful! You got it right!";
+ }else{
+  document.getElementById("questionFeedback").textContent=
+  "🌸 Good try! The word was "+quiz[index][0]+". Keep practising!";
+ }
+ document.getElementById("nextBtn").style.display="inline-block";
+ document.getElementById("nextBtn").textContent=
+ index===9?"See my results 🏆":"Next question ➜";
+}
+function nextQuestion(){
+ index++;
+ if(index<10)displayQuestion();
+ else finishGame();
+}
+function addDino(type,item){
+ if(type==="magical"){
+  if(!data.magical.includes(item))data.magical.push(item);
+ }else if(type==="baby"){
+  data.babies.push(item);
+ }else{
+  data.grumpies.push(item);
+ }
+}
+function finishGame(){
+ const percentage=correct*10;
+ earned=correct===10?3:correct===9?2:correct===8?1:0;
+ data.stars+=earned;
+ let reward,emoji,type,item;
+ if(percentage>=90){
+  type="magical";
+  item=data.magical.length%magical.length;
+  addDino(type,item);
+  reward=magical[item][1];
+  emoji=magical[item][0];
+ }else if(percentage>=51){
+  type="baby";
+  item=data.babies.length%babies.length;
+  addDino(type,item);
+  reward=babies[item][1];
+  emoji=babies[item][0];
+ }else{
+  type="grumpy";
+  item=data.grumpies.length%grumpies.length;
+  addDino(type,item);
+  reward=grumpies[item][1];
+  emoji=grumpies[item][0];
+ }
+ // One bonus dinosaur for every new 50-star milestone.
+ let bonus="";
+ let milestones=Math.floor(data.stars/50);
+ while(data.bonusMilestones<milestones){
+  data.bonusMilestones++;
+  let bonusIndex=data.babies.length%babies.length;
+  addDino("baby",bonusIndex);
+  bonus+=" 🎁 Bonus: "+babies[bonusIndex][1]+"!";
+ }
+ const date=new Date().toLocaleDateString();
+ data.history.unshift({
+  date,correct,percentage,stars:earned,reward,emoji,bonus
+ });
+ data.history=data.history.slice(0,100);
+ save();
+ document.getElementById("game").style.display="none";
+ document.getElementById("result").style.display="block";
+ document.getElementById("resultEmoji").textContent=emoji;
+ document.getElementById("resultScore").textContent=
+ correct+" / 10 ("+percentage+"%)";
+ document.getElementById("resultMessage").textContent=
+ percentage>=90?"Amazing! You earned a magical dinosaur! ✨":
+ percentage>=51?"Great effort! You earned a baby dinosaur! 🌸":
+ "Keep practising! Your grumpy dinosaur is waiting for you! 💕";
+ document.getElementById("earnedStars").textContent=
+ earned+" star"+(earned===1?"":"s")+" earned! ⭐";
+ document.getElementById("earnedDino").textContent=
+ "You earned "+reward+" "+emoji+bonus;
+ document.getElementById("bar").style.width="100%";
+}
+function renderCollection(){
+ updateStats();
+ renderGroup("magicalGrid",magical,data.magical,true);
+ renderGroup("babyGrid",babies,data.babies,false);
+ renderGroup("grumpyGrid",grumpies,data.grumpies,false);
+ const history=document.getElementById("history");
+ history.innerHTML="";
+ if(!data.history.length){
+  history.innerHTML="<p>No exercises yet. Let's play!</p>";
+ }else{
+  data.history.forEach(h=>{
+   const div=document.createElement("div");
+   div.className="historyitem";
+   div.textContent="📅 "+h.date+" | "+h.correct+
+   "/10 correct | "+h.percentage+"% | "+h.stars+
+   " ⭐ | "+h.emoji+" "+h.reward+(h.bonus||"");
+   history.appendChild(div);
+  });
+ }
+}
+function renderGroup(id,list,unlocked,unique){
+ const grid=document.getElementById(id);
+ grid.innerHTML="";
+ list.forEach((d,i)=>{
+  const has=unique?unlocked.includes(i):unlocked.includes(i);
+  const div=document.createElement("div");
+  div.className="dinocard "+(has?"":"locked");
+  div.innerHTML="<div class='emoji'>"+(has?d[0]:"🔒")+
+  "</div><b>"+(has?d[1]:"???")+"</b>";
+  grid.appendChild(div);
+ });
+}
+updateStats();
+renderCollection();
+</script>
+</body>
+</html>
