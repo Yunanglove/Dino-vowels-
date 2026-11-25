@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kawaii Vowel Dino Club</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar"><a class="brand" href="index.html">🦕 Kawaii Vowel Dino Club</a><nav><a class="active" href="index.html">🌸 Play</a><a href="collection.html">🎀 Dino Garden</a></nav></header>
+<main class="shell">
+<section class="hero"><div><span class="bubble">♡ Welcome, little word explorer! ♡</span><h1>Let's practise our vowels! 🌈</h1><p>Choose your age, say the words, earn stars and collect adorable dinosaur friends.</p></div><div class="hero-art">🦕🌷✨</div></section>
+<section class="card"><div class="section-title"><span>🎀</span><div><h2>Choose your age</h2><p>Your word adventure changes to suit your age group.</p></div></div>
+<div class="age-options">
+<button class="age-option selected" data-age="4-5"><span>🐣</span><b>4–5 years</b><small>First vowel sounds</small></button>
+<button class="age-option" data-age="6-7"><span>🐰</span><b>6–7 years</b><small>Short & long vowels</small></button>
+<button class="age-option" data-age="8-9"><span>🐼</span><b>8–9 years</b><small>Vowel teams</small></button>
+<button class="age-option" data-age="10-12"><span>🦊</span><b>10–12 years</b><small>Tricky word patterns</small></button>
+</div><p id="ageNote" class="age-note">Ages 4–5: familiar, simple words and listening practice.</p></section>
+<section class="stats"><div class="stat"><span>⭐ My stars</span><strong id="stars">0</strong></div><div class="stat"><span>🦖 Dino friends</span><strong id="dinoCount">0</strong></div><div class="stat"><span>📅 Today's game</span><strong id="todayStatus">Not played</strong></div></section>
+<section class="card game-card"><div class="game-heading"><div><span class="bubble mini">DAILY DINO CHALLENGE</span><h2 id="gameTitle">Ready, dino pal?</h2></div><span class="counter" id="progressLabel">10 questions</span></div>
+<div id="startPanel" class="center-panel"><div class="big-art">🎤🌸</div><p>Find a quiet spot. Allow microphone access, then say each word clearly.</p><button id="startBtn" class="primary">Start my 10 questions ✨</button><p class="tiny">A grown-up can help with microphone permission.</p></div>
+<div id="questionPanel" hidden><div class="progress-track"><div id="progressBar"></div></div><p id="questionNumber" class="muted">Question 1 of 10</p><div class="question-box"><div class="word-deco">✿　♡　✿</div><p class="muted">Say this word:</p><div id="word" class="word">cat</div><div id="vowelHint" class="vowel-hint">Short a sound</div></div>
+<div class="controls"><button id="listenBtn" class="primary">🎙️ Listen to me</button><button id="hearBtn" class="secondary">🔊 Hear the word</button></div><p id="speechStatus" class="status" aria-live="polite">Tap “Listen to me” and say the word.</p><p id="heardText" class="muted heard"></p><button id="nextBtn" class="primary next" disabled>Next question ➜</button></div>
+<div id="resultPanel" hidden class="center-panel"><div id="resultEmoji" class="big-art">🎉</div><h2 id="resultTitle">You did it!</h2><p id="resultSummary"></p><div id="earnedStars" class="earned-stars"></div><p id="dinoReward" class="reward-text"></p><a class="button-link" href="collection.html">Visit my Dino Garden 🌷</a></div>
+</section>
+<p class="footer-note">♡ Every try helps you learn. You're doing dino-mite! ♡</p>
+</main><script src="app.js"></script>
+</body></html>
