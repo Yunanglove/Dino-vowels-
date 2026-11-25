@@ -3,405 +3,782 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vowel Dino World 🦕</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vowel Dino World</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;font-family:'Trebuchet MS',sans-serif;
- background:linear-gradient(135deg,#ffe4f1,#e8e1ff,#dcf8ff);
- color:#665477;min-height:100vh;
+ margin:0;font-family:"Trebuchet MS",Arial,sans-serif;
+ color:#725477;
+ background:linear-gradient(135deg,#ffe5f2,#e9e2ff,#dcf8ff);
 }
 header{text-align:center;padding:22px 12px}
-header h1{font-size:34px;margin:5px;color:#a45cba}
-header p{margin:5px}
+header h1{color:#a45cba;font-size:36px;margin:5px}
 nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-button,select{
- border:0;border-radius:18px;padding:12px 19px;
- font-size:15px;font-weight:bold;cursor:pointer;
- transition:.15s;background:#fff;color:#795c96;
+button,select,input{font:inherit}
+button{
+ border:0;border-radius:18px;padding:12px 18px;
+ font-weight:bold;cursor:pointer;color:#725477;
+ background:white;transition:.15s;
 }
 button:hover{transform:scale(1.04)}
-button:active{transform:scale(.97)}
 button:disabled{opacity:.5;cursor:not-allowed}
-.navbtn{background:#dcbaf5}
-.navbtn.active{background:#a76bce;color:white}
-.card{
- background:#ffffffdf;border:3px solid #fff;
- border-radius:25px;padding:22px;margin:18px auto;
- max-width:760px;box-shadow:0 7px 20px #b79bd533;
- text-align:center;
-}
-.page{display:none;padding:5px 14px 35px}
-.page.active{display:block}
-h2{color:#a45cba}
-.bigdino{font-size:75px}
-.small{font-size:13px;color:#927da4}
 .primary{background:#b984e5;color:white}
-.pink{background:#ffb9d7;color:#794a72}
-.blue{background:#a8dff5;color:#426c80}
-.green{background:#b7eacb;color:#47765b}
-.yellow{background:#ffe49b;color:#82672f}
-#progress{height:13px;background:#eee0f5;border-radius:20px;overflow:hidden;margin:15px 0}
-#bar{height:100%;width:0;background:#b984e5;transition:.3s}
-.options{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:18px}
-.options button{min-width:100px}
-.stat{display:inline-block;background:#fff0f8;border-radius:16px;padding:12px;margin:5px}
-.dinogrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:12px}
-.dinocard{background:#fff0f8;border-radius:20px;padding:15px}
-.dinocard .emoji{font-size:45px}
-.dinocard.locked{opacity:.4;filter:grayscale(1)}
-.historyitem{background:#fff0f8;border-radius:15px;padding:12px;margin:9px;text-align:left}
-input[type=text]{padding:12px;border:2px solid #e5c9f5;border-radius:15px;width:80%;max-width:300px}
-.notice{background:#fff5d9;padding:12px;border-radius:15px;margin:12px auto}
+.pink{background:#ffb9d7}
+.green{background:#b8ebca}
+.navbtn{background:#dfc2f5}
+.navbtn.active{background:#a76bce;color:white}
+.page{display:none;padding:10px 14px 35px}
+.page.active{display:block}
+.card{
+ background:#ffffffed;border:3px solid white;
+ border-radius:25px;padding:22px;margin:18px auto;
+ max-width:850px;text-align:center;
+ box-shadow:0 7px 20px #b79bd533;
+}
+h2{color:#a45cba}
+select,input{
+ border:2px solid #e6c9f5;border-radius:14px;
+ padding:12px;color:#725477;background:white;
+}
+.small{font-size:13px;color:#9983a6}
+.stat{
+ display:inline-block;background:#fff0f8;
+ border-radius:16px;padding:12px;margin:5px;
+}
+#progress{
+ height:13px;background:#eee0f5;
+ border-radius:20px;overflow:hidden;margin:15px 0;
+}
+#bar{height:100%;background:#b984e5;width:0;transition:.3s}
+.notice{background:#fff5d9;padding:12px;border-radius:15px}
+.dinogrid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+ gap:14px;
+}
+.dinocard{
+ background:#fff0f8;border:3px solid white;
+ border-radius:20px;padding:10px;min-width:0;
+}
+.dinocard.locked{background:#eeeaf2;opacity:.65}
+.dinopic{
+ width:100%;max-width:155px;height:145px;
+ display:block;margin:auto;
+}
+.dinocard p{font-weight:bold;margin:5px}
+.dinocard .small{font-weight:normal}
+.rewardpic{width:230px;max-width:90%;margin:auto}
+.rewardpic svg{width:100%;height:auto}
+.questionpic{width:190px;height:160px;margin:auto}
+.questionpic svg{width:100%;height:100%}
+.historyitem{
+ background:#fff0f8;border-radius:15px;
+ padding:13px;margin:10px 0;text-align:left;
+}
+.hidden{display:none!important}
+.feedback{font-size:18px;min-height:30px;font-weight:bold}
 </style>
 </head>
+
 <body>
 
 <header>
- <h1>🌸 Vowel Dino World 🦕</h1>
- <p>Your magical pronunciation adventure!</p>
- <nav>
-  <button class="navbtn active" onclick="showPage('home',this)">🏡 Home</button>
-  <button class="navbtn" onclick="showPage('collection',this)">🦖 Dino Collection</button>
- </nav>
+<h1>🌸 Vowel Dino World 🦕</h1>
+<p>Your magical pronunciation adventure!</p>
+<nav>
+<button class="navbtn active" id="homeTab" onclick="showPage('home')">🏡 Home</button>
+<button class="navbtn" id="collectionTab" onclick="showPage('collection')">🦖 Dino Collection</button>
+</nav>
 </header>
 
-<!-- PAGE ONE -->
-<section id="home" class="page active">
- <div class="card">
-  <div class="bigdino">🦕</div>
-  <h2>Welcome, Little Dino Explorer!</h2>
-  <p>Let's practise our vowels and earn some stars!</p>
-  <p>Choose your age to get suitable questions.</p>
-  <select id="age">
-   <option value="young">3–5 years old 🌼</option>
-   <option value="middle" selected>6–8 years old 🌈</option>
-   <option value="older">9–12 years old ⭐</option>
-   <option value="teen">13–17 years old 🚀</option>
-  </select>
-  <br><br>
-  <button class="primary" onclick="startGame()">Start Daily Exercise! 💖</button>
-  <div class="notice small">🎤 Please allow microphone access when your browser asks.</div>
- </div>
+<!-- HOME PAGE -->
+<section class="page active" id="home">
 
- <div class="card">
-  <h2>🌟 Your Adventure Stats</h2>
-  <div class="stat">⭐ Stars: <b id="stars">0</b></div>
-  <div class="stat">🦖 Dinosaurs: <b id="dinoCount">0</b></div>
-  <div class="stat">✨ Magical dinos: <b id="magicCount">0</b>/10</div>
-  <p class="small">Collect 50 stars to earn a bonus dinosaur!</p>
-  <p id="bonusStatus">Next bonus: 50 stars</p>
- </div>
+<div class="card">
+<h2>Welcome, Little Dino Explorer!</h2>
+<p>Practise your vowels and collect beautiful dinosaurs!</p>
 
- <div class="card" id="game" style="display:none">
-  <h2 id="questionTitle">Question 1 of 10</h2>
-  <div id="progress"><div id="bar"></div></div>
-  <div class="bigdino" id="questionEmoji">🦕</div>
-  <h2 id="questionWord">Apple</h2>
-  <p id="questionHint">Say this word aloud!</p>
-  <p class="small" id="targetVowel"></p>
-  <button class="primary" id="listenBtn" onclick="listen()">🎤 Listen to me!</button>
-  <p id="listenStatus">Press the microphone and say the word.</p>
-  <p class="small">Your browser may ask for microphone permission.</p>
-  <div id="fallback" style="display:none">
-   <p>Microphone recognition is unavailable. Type the word you said:</p>
-   <input type="text" id="typedWord" placeholder="Type the word here">
-   <button class="blue" onclick="checkTyped()">Check answer</button>
-  </div>
-  <button class="green" id="nextBtn" style="display:none" onclick="nextQuestion()">Next question ➜</button>
-  <p class="small" id="questionFeedback"></p>
- </div>
+<h3>Choose your age group</h3>
+<select id="age">
+<option value="young">3–5 years 🌼</option>
+<option value="middle" selected>6–8 years 🌈</option>
+<option value="older">9–12 years ⭐</option>
+<option value="teen">13–17 years 🚀</option>
+</select>
+<br><br>
+<button class="primary" onclick="startGame()">Start Daily Exercise 💖</button>
+<p class="notice small">🎤 Allow microphone access to play.</p>
+</div>
 
- <div class="card" id="result" style="display:none">
-  <div class="bigdino" id="resultEmoji">🏆</div>
-  <h2>Exercise Complete!</h2>
-  <h2 id="resultScore">0 / 10</h2>
-  <p id="resultMessage"></p>
-  <h2 id="earnedStars">⭐</h2>
-  <h2 id="earnedDino"></h2>
-  <button class="pink" onclick="showPage('collection')">See my dinosaurs 🦖</button>
-  <button class="primary" onclick="startGame()">Play again 🌸</button>
- </div>
+<div class="card">
+<h2>🌟 My Adventure Stats</h2>
+<div class="stat">⭐ Stars: <b id="stars">0</b></div>
+<div class="stat">🦖 Dinosaurs: <b id="dinoCount">0</b></div>
+<div class="stat">✨ Magical: <b id="magicCount">0</b>/10</div>
+<p id="bonusStatus">Next dinosaur at 20 stars!</p>
+<div id="progress"><div id="bar"></div></div>
+<p class="small" id="starProgress">0 / 20 stars</p>
+</div>
+
+<!-- GAME -->
+<div class="card hidden" id="game">
+<h2 id="questionTitle">Question 1 of 10</h2>
+<div id="progress"><div id="gameBar" style="height:100%;background:#b984e5;width:0"></div></div>
+<div class="questionpic" id="questionPicture"></div>
+<h2 id="questionWord">Apple</h2>
+<p>Say this word aloud!</p>
+<p class="small" id="targetVowel"></p>
+<button class="primary" id="listenBtn" onclick="listen()">🎤 Listen to me!</button>
+<p id="listenStatus">Press the microphone and say the word.</p>
+<p class="feedback" id="feedback"></p>
+<button class="green hidden" id="nextBtn" onclick="nextQuestion()">Next question ➜</button>
+</div>
+
+<!-- RESULTS -->
+<div class="card hidden" id="result">
+<h2>🏆 Exercise Complete!</h2>
+<h2 id="resultScore"></h2>
+<p id="resultMessage"></p>
+<h2 id="earnedStars"></h2>
+<div class="rewardpic" id="rewardPicture"></div>
+<h2 id="earnedDino"></h2>
+<p id="bonusMessage"></p>
+<button class="pink" onclick="showPage('collection')">See My Dinosaurs 🦖</button>
+<button class="primary" onclick="startGame()">Play Again 🌸</button>
+</div>
+
 </section>
 
-<!-- PAGE TWO -->
-<section id="collection" class="page">
- <div class="card">
-  <h2>🌈 My Dino Collection</h2>
-  <p>Collect all 10 magical dinosaurs!</p>
-  <div class="stat">⭐ <b id="collectionStars">0</b> stars</div>
-  <div class="stat">🦕 <b id="collectionCount">0</b> dinosaurs</div>
-  <h3>✨ Magical Dinosaurs</h3>
-  <div class="dinogrid" id="magicalGrid"></div>
-  <h3>🌸 Baby Dinosaurs</h3>
-  <div class="dinogrid" id="babyGrid"></div>
-  <h3>😅 Grumpy Dinosaurs</h3>
-  <div class="dinogrid" id="grumpyGrid"></div>
- </div>
+<!-- COLLECTION PAGE -->
+<section class="page" id="collection">
 
- <div class="card">
-  <h2>📖 Exercise History</h2>
-  <div id="history"><p>No exercises yet. Let's play!</p></div>
-  <button class="pink" onclick="showPage('home')">Back to Home 🏡</button>
- </div>
+<div class="card">
+<h2>🌈 My Dino Collection</h2>
+<p>Collect all 10 magical dinosaurs!</p>
+<div class="stat">⭐ <b id="collectionStars">0</b> stars</div>
+<div class="stat">🦖 <b id="collectionCount">0</b> dinosaurs</div>
+
+<h2>✨ Magical Dinosaurs</h2>
+<p class="small">Earn with 90–100% scores.</p>
+<div class="dinogrid" id="magicalGrid"></div>
+
+<h2>🌸 Baby Dinosaurs</h2>
+<p class="small">Earn with 51–89% scores.</p>
+<div class="dinogrid" id="babyGrid"></div>
+
+<h2>😅 Grumpy Dinosaurs</h2>
+<p class="small">Earn with 0–50% scores.</p>
+<div class="dinogrid" id="grumpyGrid"></div>
+</div>
+
+<div class="card">
+<h2>📖 Exercise History</h2>
+<div id="history">No exercises yet!</div>
+<button class="pink" onclick="showPage('home')">Back Home 🏡</button>
+</div>
 </section>
 
 <script>
+
+// ========================================
+// DINOSAUR CHARACTERS
+// ========================================
+
+const dinos=[
+{id:"rainbow",name:"Rainbow Rex",group:"magical",body:"#ff9acb",belly:"#fff0b5",spike:"#a77be8",accessory:"rainbow"},
+{id:"unicorn",name:"Unicorn Dino",group:"magical",body:"#d8b5fa",belly:"#fff0fa",spike:"#ffb5d7",accessory:"horn"},
+{id:"moon",name:"Moonlight Dino",group:"magical",body:"#9e9bdf",belly:"#e5e2ff",spike:"#ffe68d",accessory:"moon"},
+{id:"fairy",name:"Fairy Dino",group:"magical",body:"#ffb5ce",belly:"#fff0f5",spike:"#c49df5",accessory:"wings"},
+{id:"crystal",name:"Crystal Dino",group:"magical",body:"#85d8df",belly:"#e1ffff",spike:"#b4a0ff",accessory:"crystal"},
+{id:"blossom",name:"Blossom Dino",group:"magical",body:"#ffb4a9",belly:"#fff0d9",spike:"#f38ab8",accessory:"flower"},
+{id:"starlight",name:"Starlight Dino",group:"magical",body:"#f8cf79",belly:"#fff2c8",spike:"#ff9acb",accessory:"star"},
+{id:"ice",name:"Ice Princess Dino",group:"magical",body:"#9ddbf8",belly:"#e9f9ff",spike:"#b5a9ff",accessory:"snow"},
+{id:"flame",name:"Flame Dino",group:"magical",body:"#ffad75",belly:"#ffe7ad",spike:"#ff6d8d",accessory:"flame"},
+{id:"ocean",name:"Ocean Magic Dino",group:"magical",body:"#77d9c9",belly:"#d8fff5",spike:"#75baff",accessory:"wave"},
+
+{id:"green",name:"Baby Green Dino",group:"baby",body:"#a8dfa2",belly:"#e9ffd9",spike:"#6dbb80",accessory:"none"},
+{id:"trex",name:"Baby T-Rex",group:"baby",body:"#8ccbb5",belly:"#e4fff1",spike:"#4eaa91",accessory:"none"},
+{id:"tiny",name:"Tiny Hatchling",group:"baby",body:"#ffe08c",belly:"#fff4c9",spike:"#f4b85f",accessory:"none"},
+{id:"flower",name:"Flower Dino",group:"baby",body:"#c3e8a7",belly:"#f3ffdf",spike:"#f5a9ca",accessory:"flower"},
+{id:"berry",name:"Berry Dino",group:"baby",body:"#ff9fbd",belly:"#ffe6ef",spike:"#a9d98b",accessory:"berry"},
+
+{id:"grumpy",name:"Grumpy Dino",group:"grumpy",body:"#aaa0bd",belly:"#e8e2ed",spike:"#84758e",accessory:"grumpy"},
+{id:"sleepy",name:"Sleepy Dino",group:"grumpy",body:"#a6b9dc",belly:"#e5edff",spike:"#899ed1",accessory:"sleepy"},
+{id:"silly",name:"Silly Dino",group:"grumpy",body:"#b7d97b",belly:"#efffcf",spike:"#83b45b",accessory:"silly"}
+];
+
+// ========================================
+// REAL DRAWN DINOSAUR PICTURES
+// Every dinosaur is an SVG illustration.
+// ========================================
+
+function makeDinoSVG(d){
+
+let decoration="";
+
+switch(d.accessory){
+
+case "rainbow":
+decoration=`
+<path d="M65 67 Q110 2 155 67" stroke="#ffcf73" stroke-width="9" fill="none"/>
+<path d="M74 67 Q110 17 146 67" stroke="#83d9bd" stroke-width="8" fill="none"/>
+<path d="M83 67 Q110 31 137 67" stroke="#bda0f6" stroke-width="7" fill="none"/>`;
+break;
+
+case "horn":
+decoration=`<path d="M105 40 L116 3 L129 40Z" fill="#ffe48d" stroke="#c9a55d" stroke-width="3"/>`;
+break;
+
+case "moon":
+decoration=`<path d="M143 7 Q110 27 145 49 Q108 55 116 22 Q126 2 143 7Z" fill="#ffe58c"/>`;
+break;
+
+case "wings":
+decoration=`
+<path d="M75 86 Q24 44 35 111 Q56 128 78 103Z" fill="#e8b9ff" stroke="#aa83ce" stroke-width="3"/>
+<path d="M145 86 Q196 44 185 111 Q164 128 142 103Z" fill="#e8b9ff" stroke="#aa83ce" stroke-width="3"/>`;
+break;
+
+case "crystal":
+decoration=`<path d="M110 4 L135 30 L119 58 L94 30Z" fill="#a4f1ed" stroke="#67bdcf" stroke-width="3"/>`;
+break;
+
+case "flower":
+decoration=`
+<circle cx="112" cy="20" r="10" fill="#ffb0d0"/>
+<circle cx="99" cy="27" r="9" fill="#ffb0d0"/>
+<circle cx="125" cy="27" r="9" fill="#ffb0d0"/>
+<circle cx="112" cy="33" r="8" fill="#ffe28b"/>`;
+break;
+
+case "star":
+decoration=`<path d="M115 4 L123 23 L143 24 L127 37 L133 56 L115 44 L97 56 L103 37 L87 24 L107 23Z" fill="#ffe58c"/>`;
+break;
+
+case "snow":
+decoration=`
+<path d="M115 5 V47 M95 15 L135 37 M135 15 L95 37" stroke="white" stroke-width="5" stroke-linecap="round"/>`;
+break;
+
+case "flame":
+decoration=`<path d="M113 51 Q80 28 110 3 Q110 24 131 12 Q156 39 120 54Z" fill="#ffdf7d"/>`;
+break;
+
+case "wave":
+decoration=`<path d="M83 35 Q100 8 116 35 Q132 8 149 35" stroke="#b6efff" fill="none" stroke-width="8" stroke-linecap="round"/>`;
+break;
+
+case "berry":
+decoration=`
+<path d="M105 28 Q91 1 80 13 Q91 31 105 28Z" fill="#80c77a"/>
+<path d="M108 28 Q123 1 137 13 Q124 31 108 28Z" fill="#80c77a"/>`;
+break;
+
+case "sleepy":
+decoration=`<text x="150" y="37" font-size="25" fill="#8f8bc5">Z</text>`;
+break;
+
+case "grumpy":
+decoration=`<path d="M82 78 L103 88 M127 88 L148 78" stroke="#705c83" stroke-width="5" stroke-linecap="round"/>`;
+break;
+
+case "silly":
+decoration=`<path d="M103 29 Q112 9 123 29" stroke="white" stroke-width="7" fill="none"/>`;
+break;
+}
+
+let eyes=d.accessory==="sleepy"
+?`<path d="M87 93 Q96 84 105 93 M125 93 Q134 84 143 93" stroke="#493d56" stroke-width="4" fill="none"/>`
+:`<ellipse cx="96" cy="90" rx="6" ry="9" fill="#493d56"/>
+<ellipse cx="133" cy="90" rx="6" ry="9" fill="#493d56"/>
+<circle cx="98" cy="87" r="2.5" fill="white"/>
+<circle cx="135" cy="87" r="2.5" fill="white"/>`;
+
+let mouth=d.accessory==="grumpy"
+?`<path d="M103 117 Q114 106 126 117" stroke="#654b67" stroke-width="4" fill="none" stroke-linecap="round"/>`
+:`<path d="M104 111 Q115 124 126 111" stroke="#654b67" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+
+return `
+<svg viewBox="0 0 210 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${d.name}">
+<ellipse cx="106" cy="170" rx="67" ry="8" fill="#d7c7df"/>
+
+${decoration}
+
+<!-- Tail -->
+<path d="M63 130 Q25 130 18 105 Q46 110 76 116"
+fill="${d.body}" stroke="#72557e" stroke-width="3"/>
+
+<!-- Feet -->
+<ellipse cx="80" cy="151" rx="19" ry="12" fill="${d.body}" stroke="#72557e" stroke-width="3"/>
+<ellipse cx="143" cy="151" rx="19" ry="12" fill="${d.body}" stroke="#72557e" stroke-width="3"/>
+
+<!-- Dinosaur body -->
+<ellipse cx="111" cy="125" rx="62" ry="43" fill="${d.body}" stroke="#72557e" stroke-width="3"/>
+
+<!-- Belly -->
+<ellipse cx="117" cy="135" rx="35" ry="27" fill="${d.belly}"/>
+
+<!-- Back spikes -->
+<path d="M72 82 L82 60 L95 81 L108 51 L121 80 L138 62 L149 87"
+fill="${d.spike}" stroke="#72557e" stroke-width="3" stroke-linejoin="round"/>
+
+<!-- Head -->
+<circle cx="114" cy="87" r="45" fill="${d.body}" stroke="#72557e" stroke-width="3"/>
+
+<!-- Cheeks -->
+<circle cx="77" cy="107" r="9" fill="#ff9ebd" opacity=".8"/>
+<circle cx="151" cy="107" r="9" fill="#ff9ebd" opacity=".8"/>
+
+<!-- Eyes -->
+${eyes}
+
+<!-- Smile -->
+${mouth}
+
+<!-- Arms -->
+<path d="M67 123 Q48 127 54 142" stroke="${d.body}" stroke-width="13" fill="none" stroke-linecap="round"/>
+<path d="M156 123 Q173 127 168 142" stroke="${d.body}" stroke-width="13" fill="none" stroke-linecap="round"/>
+
+<!-- Little details -->
+<circle cx="88" cy="73" r="3" fill="white" opacity=".7"/>
+<circle cx="101" cy="63" r="3" fill="white" opacity=".7"/>
+</svg>`;
+}
+
+
+// ========================================
+// AGE-APPROPRIATE QUESTIONS
+// ========================================
+
 const questions={
- young:[
-  ["Apple","A","🍎"],["Egg","E","🥚"],["Igloo","I","🏠"],
-  ["Octopus","O","🐙"],["Umbrella","U","☂️"],
-  ["Ant","A","🐜"],["Elephant","E","🐘"],
-  ["Insect","I","🐞"],["Ostrich","O","🐦"],["Unicorn","U","🦄"]
- ],
- middle:[
-  ["Apple","A","🍎"],["Elephant","E","🐘"],["Insect","I","🐞"],
-  ["Octopus","O","🐙"],["Umbrella","U","☂️"],
-  ["Alligator","A","🐊"],["Engine","E","🚂"],
-  ["Igloo","I","🏠"],["Orange","O","🍊"],["Unicorn","U","🦄"]
- ],
- older:[
-  ["Astronaut","A","👨‍🚀"],["Envelope","E","✉️"],["Island","I","🏝️"],
-  ["Oxygen","O","🫧"],["Universe","U","🌌"],
-  ["Animal","A","🐾"],["Energy","E","⚡"],
-  ["Imagine","I","💭"],["Ocean","O","🌊"],["Unique","U","💎"]
- ],
- teen:[
-  ["Adventure","A","🗺️"],["Education","E","📚"],["Incredible","I","✨"],
-  ["Opportunity","O","🌟"],["Universe","U","🌌"],
-  ["Amazing","A","🌈"],["Experiment","E","🧪"],
-  ["Independent","I","🦋"],["Observation","O","🔭"],["Understanding","U","💡"]
- ]
+young:[
+["Apple","A","An apple"],
+["Egg","E","An egg"],
+["Igloo","I","An igloo"],
+["Octopus","O","An octopus"],
+["Umbrella","U","An umbrella"],
+["Ant","A","An ant"],
+["Elephant","E","An elephant"],
+["Insect","I","An insect"],
+["Orange","O","An orange"],
+["Unicorn","U","A unicorn"]
+],
+middle:[
+["Apple","A","An apple"],
+["Elephant","E","An elephant"],
+["Insect","I","An insect"],
+["Octopus","O","An octopus"],
+["Umbrella","U","An umbrella"],
+["Alligator","A","An alligator"],
+["Engine","E","An engine"],
+["Igloo","I","An igloo"],
+["Ocean","O","An ocean"],
+["Unicorn","U","A unicorn"]
+],
+older:[
+["Astronaut","A","An astronaut"],
+["Envelope","E","An envelope"],
+["Island","I","An island"],
+["Oxygen","O","Oxygen"],
+["Universe","U","The universe"],
+["Animal","A","An animal"],
+["Energy","E","Energy"],
+["Imagine","I","Imagine"],
+["Ocean","O","The ocean"],
+["Unique","U","Unique"]
+],
+teen:[
+["Adventure","A","Adventure"],
+["Education","E","Education"],
+["Incredible","I","Incredible"],
+["Opportunity","O","Opportunity"],
+["Universe","U","Universe"],
+["Amazing","A","Amazing"],
+["Experiment","E","Experiment"],
+["Independent","I","Independent"],
+["Observation","O","Observation"],
+["Understanding","U","Understanding"]
+]
 };
 
-const magical=[
- ["🌈","Rainbow Rex"],["🦄","Unicorn Dino"],["🌙","Moonlight Dino"],
- ["🧚","Fairy Dino"],["💎","Crystal Dino"],["🌸","Blossom Dino"],
- ["⭐","Starlight Dino"],["❄️","Ice Princess Dino"],
- ["🔥","Flame Dino"],["🌊","Ocean Magic Dino"]
-];
-const babies=[
- ["🦕","Baby Green Dino"],["🦖","Baby T-Rex"],
- ["🐣","Tiny Dino"],["🌷","Flower Dino"],["🍓","Berry Dino"]
-];
-const grumpies=[
- ["😤","Grumpy Dino"],["🥴","Sleepy Dino"],["🤪","Silly Dino"]
-];
 
-let data=JSON.parse(localStorage.getItem("vowelDinoSave")||"null")||{
- stars:0,magical:[],babies:[],grumpies:[],history:[],bonusMilestones:0
+// ========================================
+// SAVED PROGRESS
+// ========================================
+
+function loadData(){
+try{
+let saved=JSON.parse(localStorage.getItem("vowelDinoSave"));
+if(saved){
+return{
+stars:Number(saved.stars)||0,
+owned:Array.isArray(saved.owned)?saved.owned:[],
+history:Array.isArray(saved.history)?saved.history:[],
+bonusMilestones:Number(saved.bonusMilestones)||0
 };
-let quiz=[],index=0,correct=0,earned=0,locked=false,recognition=null;
+}
+}catch(e){}
+return{stars:0,owned:[],history:[],bonusMilestones:0};
+}
+
+let data=loadData();
+let quiz=[],index=0,correct=0,earned=0;
+let answered=false,recognition=null,currentReward=null;
 
 function save(){
- localStorage.setItem("vowelDinoSave",JSON.stringify(data));
- updateStats();
+localStorage.setItem("vowelDinoSave",JSON.stringify(data));
+updateStats();
 }
-function showPage(id,button){
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- document.getElementById(id).classList.add("active");
- document.querySelectorAll(".navbtn").forEach(b=>b.classList.remove("active"));
- if(button)button.classList.add("active");
- if(id==="collection")renderCollection();
+
+
+// ========================================
+// NAVIGATION
+// ========================================
+
+function showPage(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+document.getElementById("homeTab").classList.toggle("active",id==="home");
+document.getElementById("collectionTab").classList.toggle("active",id==="collection");
+if(id==="collection")renderCollection();
 }
+
+
+// ========================================
+// STATS
+// ========================================
+
 function updateStats(){
- document.getElementById("stars").textContent=data.stars;
- document.getElementById("dinoCount").textContent=
- data.magical.length+data.babies.length+data.grumpies.length;
- document.getElementById("magicCount").textContent=data.magical.length;
- document.getElementById("collectionStars").textContent=data.stars;
- document.getElementById("collectionCount").textContent=
- data.magical.length+data.babies.length+data.grumpies.length;
- document.getElementById("bonusStatus").textContent=
- "Next bonus: "+(Math.floor(data.stars/50)+1)*50+" stars";
+let magic=data.owned.filter(id=>dinos.some(d=>d.id===id&&d.group==="magical")).length;
+
+document.getElementById("stars").textContent=data.stars;
+document.getElementById("dinoCount").textContent=data.owned.length;
+document.getElementById("magicCount").textContent=magic;
+document.getElementById("collectionStars").textContent=data.stars;
+document.getElementById("collectionCount").textContent=data.owned.length;
+
+let next=(Math.floor(data.stars/20)+1)*20;
+let progress=data.stars%20;
+
+document.getElementById("bonusStatus").textContent="Next dinosaur at "+next+" stars!";
+document.getElementById("bar").style.width=(progress/20*100)+"%";
+document.getElementById("starProgress").textContent=progress+" / 20 stars towards your next dinosaur";
 }
+
+
+// ========================================
+// START EXERCISE
+// ========================================
+
 function startGame(){
- const level=document.getElementById("age").value;
- quiz=[...questions[level]].sort(()=>Math.random()-.5);
- index=0;correct=0;earned=0;
- document.getElementById("result").style.display="none";
- document.getElementById("game").style.display="block";
- showPage("home");
- displayQuestion();
+
+if(recognition){
+try{recognition.abort()}catch(e){}
+recognition=null;
 }
+
+quiz=[...questions[document.getElementById("age").value]];
+
+for(let i=quiz.length-1;i>0;i--){
+let j=Math.floor(Math.random()*(i+1));
+[quiz[i],quiz[j]]=[quiz[j],quiz[i]];
+}
+
+index=0;
+correct=0;
+answered=false;
+currentReward=null;
+
+document.getElementById("game").classList.remove("hidden");
+document.getElementById("result").classList.add("hidden");
+
+showPage("home");
+displayQuestion();
+}
+
+
+// ========================================
+// DISPLAY QUESTION
+// ========================================
+
 function displayQuestion(){
- locked=false;
- const q=quiz[index];
- document.getElementById("questionTitle").textContent=
- "Question "+(index+1)+" of 10";
- document.getElementById("bar").style.width=(index*10)+"%";
- document.getElementById("questionWord").textContent=q[0];
- document.getElementById("questionEmoji").textContent=q[2];
- document.getElementById("targetVowel").textContent=
- "Listen for the vowel: "+q[1];
- document.getElementById("listenStatus").textContent=
- "Press the microphone and say the word.";
- document.getElementById("questionFeedback").textContent="";
- document.getElementById("nextBtn").style.display="none";
- document.getElementById("listenBtn").style.display="inline-block";
- document.getElementById("fallback").style.display="none";
- document.getElementById("typedWord").value="";
+
+answered=false;
+let q=quiz[index];
+
+document.getElementById("questionTitle").textContent="Question "+(index+1)+" of 10";
+document.getElementById("questionPicture").innerHTML="";
+document.getElementById("questionWord").textContent=q[0];
+document.getElementById("targetVowel").textContent="Practise the vowel: "+q[1];
+document.getElementById("listenStatus").textContent="Press the microphone and say the word.";
+document.getElementById("feedback").textContent="";
+document.getElementById("listenBtn").classList.remove("hidden");
+document.getElementById("listenBtn").disabled=false;
+document.getElementById("nextBtn").classList.add("hidden");
+document.getElementById("gameBar").style.width=(index*10)+"%";
 }
+
+
+// ========================================
+// MICROPHONE
+// ========================================
+
 function listen(){
- const SpeechRecognition=window.SpeechRecognition||
- window.webkitSpeechRecognition;
- if(!SpeechRecognition){
-  document.getElementById("fallback").style.display="block";
-  document.getElementById("listenStatus").textContent=
-  "Voice recognition is not supported in this browser.";
-  return;
- }
- if(recognition)recognition.abort();
- recognition=new SpeechRecognition();
- recognition.lang="en-SG";
- recognition.continuous=false;
- recognition.interimResults=false;
- recognition.maxAlternatives=3;
- document.getElementById("listenStatus").textContent="🎤 Listening...";
- document.getElementById("listenBtn").disabled=true;
- recognition.onresult=e=>{
-  let transcript=e.results[0][0].transcript;
-  checkAnswer(transcript);
- };
- recognition.onerror=e=>{
-  document.getElementById("listenStatus").textContent=
-  "Couldn't hear that clearly. Please try again!";
-  document.getElementById("listenBtn").disabled=false;
- };
- recognition.onend=()=>{
-  document.getElementById("listenBtn").disabled=false;
- };
- recognition.start();
+
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+
+if(!SpeechRecognition){
+document.getElementById("listenStatus").textContent="Please use Google Chrome for voice recognition.";
+return;
 }
-function checkTyped(){
- checkAnswer(document.getElementById("typedWord").value);
+
+if(answered)return;
+
+if(recognition){
+try{recognition.abort()}catch(e){}
 }
-function checkAnswer(spoken){
- if(locked)return;
- const expected=quiz[index][0].toLowerCase();
- const heard=spoken.toLowerCase().replace(/[^a-z]/g," ").trim();
- const words=heard.split(/\s+/);
- const isCorrect=words.some(w=>w===expected);
- locked=true;
- document.getElementById("listenBtn").style.display="none";
- document.getElementById("fallback").style.display="none";
- document.getElementById("listenStatus").textContent=
- "I heard: "+spoken;
- if(isCorrect){
-  correct++;
-  document.getElementById("questionFeedback").textContent=
-  "🎉 Wonderful! You got it right!";
- }else{
-  document.getElementById("questionFeedback").textContent=
-  "🌸 Good try! The word was "+quiz[index][0]+". Keep practising!";
- }
- document.getElementById("nextBtn").style.display="inline-block";
- document.getElementById("nextBtn").textContent=
- index===9?"See my results 🏆":"Next question ➜";
+
+recognition=new SpeechRecognition();
+recognition.lang="en-SG";
+recognition.continuous=false;
+recognition.interimResults=false;
+recognition.maxAlternatives=3;
+
+document.getElementById("listenBtn").disabled=true;
+document.getElementById("listenStatus").textContent="🎤 Listening...";
+
+recognition.onresult=function(event){
+let alternatives=[];
+for(let i=0;i<event.results[0].length;i++){
+alternatives.push(event.results[0][i].transcript);
 }
+checkAnswer(alternatives);
+};
+
+recognition.onerror=function(event){
+if(answered)return;
+document.getElementById("listenBtn").disabled=false;
+document.getElementById("listenStatus").textContent=
+event.error==="not-allowed"?
+"Please allow microphone access.":
+"I couldn't hear you. Try again!";
+};
+
+recognition.onend=function(){
+if(!answered)document.getElementById("listenBtn").disabled=false;
+};
+
+try{recognition.start();}
+catch(e){
+document.getElementById("listenBtn").disabled=false;
+document.getElementById("listenStatus").textContent="Please try again.";
+}
+}
+
+
+// ========================================
+// CHECK ANSWER
+// ========================================
+
+function checkAnswer(alternatives){
+
+if(answered)return;
+
+let expected=quiz[index][0].toLowerCase();
+
+let found=alternatives.some(spoken=>{
+let cleaned=spoken.toLowerCase().replace(/[^a-z\s]/g," ").trim();
+return cleaned.split(/\s+/).includes(expected);
+});
+
+answered=true;
+document.getElementById("listenBtn").classList.add("hidden");
+document.getElementById("listenStatus").textContent="I heard: "+alternatives.join(" / ");
+
+if(found){
+correct++;
+document.getElementById("feedback").textContent="🎉 Wonderful! Correct!";
+document.getElementById("feedback").style.color="#53a879";
+}else{
+document.getElementById("feedback").textContent="🌸 Good try! The word was "+quiz[index][0]+".";
+document.getElementById("feedback").style.color="#b778a5";
+}
+
+document.getElementById("nextBtn").classList.remove("hidden");
+document.getElementById("nextBtn").textContent=index===9?"See my results 🏆":"Next question ➜";
+}
+
+
+// ========================================
+// NEXT QUESTION
+// ========================================
+
 function nextQuestion(){
- index++;
- if(index<10)displayQuestion();
- else finishGame();
+if(!answered)return;
+index++;
+if(index<10)displayQuestion();
+else finishGame();
 }
-function addDino(type,item){
- if(type==="magical"){
-  if(!data.magical.includes(item))data.magical.push(item);
- }else if(type==="baby"){
-  data.babies.push(item);
- }else{
-  data.grumpies.push(item);
- }
-}
+
+
+// ========================================
+// REWARD SYSTEM
+// ========================================
+
 function finishGame(){
- const percentage=correct*10;
- earned=correct===10?3:correct===9?2:correct===8?1:0;
- data.stars+=earned;
- let reward,emoji,type,item;
- if(percentage>=90){
-  type="magical";
-  item=data.magical.length%magical.length;
-  addDino(type,item);
-  reward=magical[item][1];
-  emoji=magical[item][0];
- }else if(percentage>=51){
-  type="baby";
-  item=data.babies.length%babies.length;
-  addDino(type,item);
-  reward=babies[item][1];
-  emoji=babies[item][0];
- }else{
-  type="grumpy";
-  item=data.grumpies.length%grumpies.length;
-  addDino(type,item);
-  reward=grumpies[item][1];
-  emoji=grumpies[item][0];
- }
- // One bonus dinosaur for every new 50-star milestone.
- let bonus="";
- let milestones=Math.floor(data.stars/50);
- while(data.bonusMilestones<milestones){
-  data.bonusMilestones++;
-  let bonusIndex=data.babies.length%babies.length;
-  addDino("baby",bonusIndex);
-  bonus+=" 🎁 Bonus: "+babies[bonusIndex][1]+"!";
- }
- const date=new Date().toLocaleDateString();
- data.history.unshift({
-  date,correct,percentage,stars:earned,reward,emoji,bonus
- });
- data.history=data.history.slice(0,100);
- save();
- document.getElementById("game").style.display="none";
- document.getElementById("result").style.display="block";
- document.getElementById("resultEmoji").textContent=emoji;
- document.getElementById("resultScore").textContent=
- correct+" / 10 ("+percentage+"%)";
- document.getElementById("resultMessage").textContent=
- percentage>=90?"Amazing! You earned a magical dinosaur! ✨":
- percentage>=51?"Great effort! You earned a baby dinosaur! 🌸":
- "Keep practising! Your grumpy dinosaur is waiting for you! 💕";
- document.getElementById("earnedStars").textContent=
- earned+" star"+(earned===1?"":"s")+" earned! ⭐";
- document.getElementById("earnedDino").textContent=
- "You earned "+reward+" "+emoji+bonus;
- document.getElementById("bar").style.width="100%";
+
+let percentage=correct*10;
+
+earned=correct===10?3:correct===9?2:correct===8?1:0;
+
+data.stars+=earned;
+
+let milestones=Math.floor(data.stars/20);
+let bonusMessage="";
+currentReward=null;
+
+// Award one dinosaur at each new 20-star milestone.
+if(data.bonusMilestones<milestones){
+
+data.bonusMilestones++;
+
+let group=percentage>=90?"magical":percentage>=51?"baby":"grumpy";
+
+let available=dinos.filter(d=>d.group===group);
+currentReward=available.find(d=>!data.owned.includes(d.id))||available[0];
+
+if(!data.owned.includes(currentReward.id)){
+data.owned.push(currentReward.id);
 }
+
+bonusMessage="🎉 You reached a 20-star milestone! You unlocked a dinosaur!";
+
+}else{
+let remaining=20-(data.stars%20);
+bonusMessage="You need "+remaining+" more star(s) for your next dinosaur! 🌸";
+}
+
+let rewardName=currentReward?currentReward.name:"No new dinosaur yet";
+
+data.history.unshift({
+date:new Date().toLocaleDateString(),
+correct,percentage,stars:earned,
+reward:rewardName,
+rewardId:currentReward?currentReward.id:null
+});
+
+data.history=data.history.slice(0,100);
+save();
+
+document.getElementById("game").classList.add("hidden");
+document.getElementById("result").classList.remove("hidden");
+
+document.getElementById("resultScore").textContent=correct+" / 10 ("+percentage+"%)";
+document.getElementById("resultMessage").textContent="Your vowel adventure is complete!";
+document.getElementById("earnedStars").textContent="You earned "+earned+" ⭐";
+document.getElementById("bonusMessage").textContent=bonusMessage;
+
+if(currentReward){
+document.getElementById("rewardPicture").innerHTML=makeDinoSVG(currentReward);
+document.getElementById("earnedDino").textContent="Meet your new dinosaur: "+currentReward.name+"!";
+}else{
+document.getElementById("rewardPicture").innerHTML="";
+document.getElementById("earnedDino").textContent="Your next dinosaur is waiting!";
+}
+
+document.getElementById("gameBar").style.width="100%";
+}
+
+
+// ========================================
+// COLLECTION
+// ========================================
+
 function renderCollection(){
- updateStats();
- renderGroup("magicalGrid",magical,data.magical,true);
- renderGroup("babyGrid",babies,data.babies,false);
- renderGroup("grumpyGrid",grumpies,data.grumpies,false);
- const history=document.getElementById("history");
- history.innerHTML="";
- if(!data.history.length){
-  history.innerHTML="<p>No exercises yet. Let's play!</p>";
- }else{
-  data.history.forEach(h=>{
-   const div=document.createElement("div");
-   div.className="historyitem";
-   div.textContent="📅 "+h.date+" | "+h.correct+
-   "/10 correct | "+h.percentage+"% | "+h.stars+
-   " ⭐ | "+h.emoji+" "+h.reward+(h.bonus||"");
-   history.appendChild(div);
-  });
- }
+
+updateStats();
+
+renderGroup("magicalGrid","magical");
+renderGroup("babyGrid","baby");
+renderGroup("grumpyGrid","grumpy");
+
+renderHistory();
 }
-function renderGroup(id,list,unlocked,unique){
- const grid=document.getElementById(id);
- grid.innerHTML="";
- list.forEach((d,i)=>{
-  const has=unique?unlocked.includes(i):unlocked.includes(i);
-  const div=document.createElement("div");
-  div.className="dinocard "+(has?"":"locked");
-  div.innerHTML="<div class='emoji'>"+(has?d[0]:"🔒")+
-  "</div><b>"+(has?d[1]:"???")+"</b>";
-  grid.appendChild(div);
- });
+
+function renderGroup(elementId,group){
+
+let grid=document.getElementById(elementId);
+grid.innerHTML="";
+
+dinos.filter(d=>d.group===group).forEach(d=>{
+
+let unlocked=data.owned.includes(d.id);
+
+let card=document.createElement("div");
+card.className="dinocard"+(unlocked?"":" locked");
+
+if(unlocked){
+card.innerHTML=`
+<div class="dinopic">${makeDinoSVG(d)}</div>
+<p>${d.name}</p>
+<div class="small">✨ Collected!</div>`;
+}else{
+card.innerHTML=`
+<div style="font-size:65px;padding:25px">🥚</div>
+<p>???</p>
+<div class="small">Not unlocked yet</div>`;
 }
+
+grid.appendChild(card);
+});
+}
+
+
+// ========================================
+// HISTORY
+// ========================================
+
+function renderHistory(){
+
+let history=document.getElementById("history");
+history.innerHTML="";
+
+if(!data.history.length){
+history.textContent="No exercises yet!";
+return;
+}
+
+data.history.forEach(h=>{
+
+let div=document.createElement("div");
+div.className="historyitem";
+
+let title=document.createElement("b");
+title.textContent="📅 "+h.date;
+
+let score=document.createElement("p");
+score.textContent=h.correct+"/10 correct ("+h.percentage+"%)";
+
+let stars=document.createElement("p");
+stars.textContent="⭐ "+h.stars+" stars earned";
+
+let reward=document.createElement("p");
+reward.textContent=h.rewardId?"🦖 Dinosaur unlocked: "+h.reward:"🥚 "+h.reward;
+
+div.append(title,score,stars,reward);
+history.appendChild(div);
+});
+}
+
+
+// ========================================
+// INITIALISE
+// ========================================
+
 updateStats();
 renderCollection();
+
 </script>
 </body>
 </html>
